@@ -4,6 +4,7 @@ import Data.List
 import Data.Foldable
 import Test.QuickCheck
 import Test.QuickCheck.All
+import Data.Monoid
 
 insertionSort :: Ord a => [a] -> [a]
 insertionSort = foldr insert []
@@ -35,4 +36,14 @@ reverseInsert' x ls = if x >= head ls
                         else head ls : reverseInsert' x (tail ls)
 
 prop_reverseInsertionSort xs = reverseInsertionSort xs == reverse (insertionSort xs)
+
+-- Exercice 2.1.3: search if an element is in a list and return its index
+search :: Ord a => a -> [a] -> Maybe a
+search x ls = find (==x) ls
+
+search' :: Ord a => a -> [a] -> Maybe a
+search' v ls = getFirst . foldMap (\x -> First (if v == x then Just x else Nothing))
+
+
+
 
