@@ -1,0 +1,48 @@
+
+./app/Main.hs,52
+module Main Main0,1
+main main4,5
+main main5,6
+
+./Setup.hs,15
+main main1,2
+
+./src/ch02.hs,900
+module Ch01 Ch010,1
+insertionSort insertionSort8,9
+insertionSort insertionSort9,10
+prop_sortPreservesLength prop_sortPreservesLength14,15
+prop_sortIdempotent prop_sortIdempotent17,18
+prop_sort_nn_min prop_sort_nn_min20,21
+prop_sort_nn_max prop_sort_nn_max21,22
+reverseInsertionSort reverseInsertionSort24,25
+reverseInsertionSort reverseInsertionSort25,26
+reverseInsert reverseInsert27,28
+reverseInsert reverseInsert28,29
+reverseInsert' reverseInsert'31,32
+reverseInsert' reverseInsert'32,33
+prop_reverseInsertionSort prop_reverseInsertionSort37,38
+search search40,41
+search search41,42
+searchL searchL47,48
+searchL searchL48,49
+selectionSort selectionSort52,53
+selectionSort selectionSort53,54
+selectionSort2 selectionSort260,61
+selectionSort2 selectionSort261,62
+prop_selectionSort prop_selectionSort66,67
+prop_selectionSort2 prop_selectionSort267,68
+
+./src/ch03.hs,0
+
+./src/ch10.hs,22
+module Ch10 Ch101,2
+
+./src/Lib.hs,65
+module LibLib0,1
+someFunc someFunc4,5
+someFunc someFunc5,6
+
+./test/Spec.hs,30
+main main0,1
+main main1,2
