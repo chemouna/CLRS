@@ -159,7 +159,7 @@ public class MaximumSubarray {
         int[] arr2 = {-2, 3, 4, -1, 2, 1};
         System.out.println(maximumSubarray.findMaximumSubarrayBruteForce(arr2));
         //System.out.println(maximumSubarray.findMaximumSubarrayRec(arr2, 0, arr2.length)); // TODO: check why this isn't working
-        System.out.println(maximumSubarray.findMaximumSubarrayAcc(arr2));
+        System.out.println(maximumSubarray.findMaximumSubarrayLinear(arr2, 0, arr2.length - 1));
     }
 
     // On my machine the crossover point where the recursive algorithm beats the brute force algorithm happens at 52
@@ -172,24 +172,24 @@ public class MaximumSubarray {
      * for negative sums result it's better to return an empty subarray with sum = 0 which is bigger then the negative
      * sum, we can do this by initializing leftSum and rightSum in findMaximumCrossingSubArray to 0 instead of
      * Integer.MIN_VALUE
-    */
+     */
 
     // 4.1-5
-    SubArraySum findMaximumSubarrayAcc(int[] arr) {
-        int maxSeenSoFar = 0;
+    SubArraySum findMaximumSubarrayLinear(int[] arr, int low, int high) {
         int left = 0;
         int right = 0;
-        for (int j = 0; j < arr.length; j++) {
-            maxSeenSoFar += arr[j];
-            right = j;
-            for (int i = left; i < j; i++) {
-                if(maxSeenSoFar < maxSeenSoFar - arr[i]) {
-                    maxSeenSoFar -= arr[i];
-                    left = i+1;
-                }
-                else {
-                    break;
-                }
+        int tempSum = 0;
+        int tempLeft = 0;
+        int maxSeenSoFar = arr[low];
+        for (int j = low; j <= high; j++) {
+            tempSum = Math.max(arr[j], tempSum + arr[j]);
+            if (maxSeenSoFar < tempSum) {
+                maxSeenSoFar = tempSum;
+                left = tempLeft;
+                right = j;
+            }
+            if(tempSum == arr[j]) {
+                tempLeft = j;
             }
         }
         return new SubArraySum(left, right, maxSeenSoFar);
