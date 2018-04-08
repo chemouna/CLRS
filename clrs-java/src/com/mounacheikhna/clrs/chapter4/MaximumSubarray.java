@@ -151,8 +151,13 @@ public class MaximumSubarray {
         long durationMixed = endMixed - startMixed;
 
         System.out.println("Duration for brute force : " + durationBruteForce +
-                "\nDu5ation for recursive : " + durationRec +
+                "\nDuration for recursive : " + durationRec +
                 "\nDuration for mixed approach : " + durationMixed);
+
+        // 4.1-4
+        int[] emptyArr = new int[]{};
+        System.out.println(maximumSubarray.findMaximumSubarrayBruteForce(emptyArr));
+        System.out.println(maximumSubarray.findMaximumSubarrayRec(emptyArr, 0, 0));
     }
 
     // On my machine the crossover point where the recursove algorithm beats the brute force algorithm happens at 52
@@ -160,4 +165,11 @@ public class MaximumSubarray {
 
     // the mixed approach is faster then both recursive and brute force methods for n <= 52 but seems to slow down after
     // n0 = 55 , so the crossover point doesnt change significantly
+
+    /* 4.1-4 :
+     * for negative sums result it's better to return an empty subarray with sum = 0 which is bigger then the negative
+     * sum, we can do this by initializing leftSum and rightSum in findMaximumCrossingSubArray to 0 instead of
+     * Integer.MIN_VALUE
+    */
+
 }
