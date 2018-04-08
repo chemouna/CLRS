@@ -1,5 +1,9 @@
 package com.mounacheikhna.clrs.chapter4;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class MaximumSubarray {
 
     SubArraySum findMaximumSubarrayBruteForce(int[] arr) {
@@ -65,7 +69,6 @@ public class MaximumSubarray {
         return new SubArraySum(maxLeft, maxRight, leftSum + rightSum);
     }
 
-    // TODO: test the boundary case of an array with one element
 
     class SubArraySum {
         int left;
@@ -101,6 +104,32 @@ public class MaximumSubarray {
         int[] oneElementArr = {13};
         System.out.println(maximumSubarray.findMaximumSubarrayBruteForce(oneElementArr));
         System.out.println(maximumSubarray.findMaximumSubarrayRec(oneElementArr, 0, oneElementArr.length - 1));
+
+        System.out.println("-- Tests to find the crossover point --");
+        List<Integer> values = new ArrayList<>();
+        Random random = new Random();
+        int max = 52;
+        for (int i = 0; i < 52; i++) {
+            values.add(random.nextInt(max) * (random .nextBoolean() ? -1 : 1));
+        }
+
+        int[] arr = values.stream().mapToInt(i -> i).toArray();
+        long startBruteForce = System.nanoTime();
+
+        SubArraySum resBruteForce = maximumSubarray.findMaximumSubarrayBruteForce(arr);
+
+        long endBruteForce = System.nanoTime();
+        long durationBruteForce = endBruteForce - startBruteForce;
+
+        long startRec = System.nanoTime();
+        SubArraySum resRec = maximumSubarray.findMaximumSubarrayRec(arr, 0, arr.length - 1);
+        long endRec = System.nanoTime();
+        long durationRec = endRec - startRec;
+
+        System.out.println("Duration for brute force : " + durationBruteForce + " , Duration for recursive : " + durationRec);
     }
 
+    // On my machine the crossover point where the recursove algorithm beats the brute force algorithm happens at 52
+    // elements (n0 = 52) , where Duration for brute force = 27872 , Duration for recursive = 27866 (in nano seconds)
+    
 }
