@@ -69,6 +69,25 @@ public class MaximumSubarray {
         return new SubArraySum(maxLeft, maxRight, leftSum + rightSum);
     }
 
+    SubArraySum findMaximumSubarrayMixed(int[] arr, int low, int high) {
+        if (arr.length < 52) {
+            return findMaximumSubarrayBruteForce(arr);
+        } else {
+            int mid = (low + high) / 2;
+            SubArraySum leftSubSum = findMaximumSubarrayRec(arr, low, mid);
+            SubArraySum rightSubSum = findMaximumSubarrayRec(arr, mid + 1, high);
+            SubArraySum crossingSubArray = findMaximumCrossingSubArray(arr, low, mid, high);
+
+            if (leftSubSum.sum >= rightSubSum.sum && leftSubSum.sum >= crossingSubArray.sum) {
+                return leftSubSum;
+            } else if (rightSubSum.sum >= leftSubSum.sum && rightSubSum.sum >= crossingSubArray.sum) {
+                return rightSubSum;
+            } else {
+                return crossingSubArray;
+            }
+        }
+    }
+
 
     class SubArraySum {
         int left;
@@ -109,8 +128,8 @@ public class MaximumSubarray {
         List<Integer> values = new ArrayList<>();
         Random random = new Random();
         int max = 52;
-        for (int i = 0; i < 52; i++) {
-            values.add(random.nextInt(max) * (random .nextBoolean() ? -1 : 1));
+        for (int i = 0; i < 55; i++) {
+            values.add(random.nextInt(max) * (random.nextBoolean() ? -1 : 1));
         }
 
         int[] arr = values.stream().mapToInt(i -> i).toArray();
@@ -126,10 +145,19 @@ public class MaximumSubarray {
         long endRec = System.nanoTime();
         long durationRec = endRec - startRec;
 
-        System.out.println("Duration for brute force : " + durationBruteForce + " , Duration for recursive : " + durationRec);
+        long startMixed = System.nanoTime();
+        SubArraySum resMixed = maximumSubarray.findMaximumSubarrayMixed(arr, 0, arr.length - 1);
+        long endMixed = System.nanoTime();
+        long durationMixed = endMixed - startMixed;
+
+        System.out.println("Duration for brute force : " + durationBruteForce +
+                "\nDu5ation for recursive : " + durationRec +
+                "\nDuration for mixed approach : " + durationMixed);
     }
 
     // On my machine the crossover point where the recursove algorithm beats the brute force algorithm happens at 52
     // elements (n0 = 52) , where Duration for brute force = 27872 , Duration for recursive = 27866 (in nano seconds)
-    
+
+    // the mixed approach is faster then both recursive and brute force methods for n <= 52 but seems to slow down after
+    // n0 = 55 , so the crossover point doesnt change significantly
 }
