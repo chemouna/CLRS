@@ -154,13 +154,15 @@ public class MaximumSubarray {
                 "\nDuration for recursive : " + durationRec +
                 "\nDuration for mixed approach : " + durationMixed);
 
-        // 4.1-4
-        int[] emptyArr = new int[]{};
-        System.out.println(maximumSubarray.findMaximumSubarrayBruteForce(emptyArr));
-        System.out.println(maximumSubarray.findMaximumSubarrayRec(emptyArr, 0, 0));
+        // 4.1-5
+        System.out.println(" -- 4.10-5 -- ");
+        int[] arr2 = {-2, 3, 4, -1, 2, 1};
+        System.out.println(maximumSubarray.findMaximumSubarrayBruteForce(arr2));
+        //System.out.println(maximumSubarray.findMaximumSubarrayRec(arr2, 0, arr2.length)); // TODO: check why this isn't working
+        System.out.println(maximumSubarray.findMaximumSubarrayAcc(arr2));
     }
 
-    // On my machine the crossover point where the recursove algorithm beats the brute force algorithm happens at 52
+    // On my machine the crossover point where the recursive algorithm beats the brute force algorithm happens at 52
     // elements (n0 = 52) , where Duration for brute force = 27872 , Duration for recursive = 27866 (in nano seconds)
 
     // the mixed approach is faster then both recursive and brute force methods for n <= 52 but seems to slow down after
@@ -172,4 +174,24 @@ public class MaximumSubarray {
      * Integer.MIN_VALUE
     */
 
+    // 4.1-5
+    SubArraySum findMaximumSubarrayAcc(int[] arr) {
+        int maxSeenSoFar = 0;
+        int left = 0;
+        int right = 0;
+        for (int j = 0; j < arr.length; j++) {
+            maxSeenSoFar += arr[j];
+            right = j;
+            for (int i = left; i < j; i++) {
+                if(maxSeenSoFar < maxSeenSoFar - arr[i]) {
+                    maxSeenSoFar -= arr[i];
+                    left = i+1;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        return new SubArraySum(left, right, maxSeenSoFar);
+    }
 }
